@@ -16,7 +16,7 @@ def combine(file_type, data_path=os.getcwd()):
             combined_list.append(data)
         concat_data = pd.concat(combined_list, ignore_index=True)
         concat_data.to_excel(os.path.join(data_path, "combined.xlsx"),
-                             index=False)        
+                             index=False)
     else:
         print("Processing CSV Files.")
         file_list = glob.glob(os.path.join(data_path, '*.csv'))
@@ -29,16 +29,18 @@ def combine(file_type, data_path=os.getcwd()):
         concat_data = pd.concat(combined_list, ignore_index=True)
         concat_data.to_csv(os.path.join(data_path, "combined.csv"),
                                         index=False)
-        
 
 
-def Main():
 
-    parser = argparse.ArgumentParser(prog="COMBIT", usage="%(prog)s [options]",                                 description="""Description: Combine CSV or 
-                                     Excel  files.""", 
-                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+def main():
+
+    parser = argparse.ArgumentParser(prog="COMBIT", usage="%(prog)s [options]",
+                                     description="""Description: Combine CSV or
+                                     Excel  files.""",
+                         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("filetype", help="CSV or Excel.")
-    parser.add_argument("-d", "--directory", help="Path to the files.",                    default=os.getcwd())
+    parser.add_argument("-d", "--directory", help="Path to the files.",
+                        default=os.getcwd())
 
     args = parser.parse_args()
 
@@ -47,9 +49,8 @@ def Main():
     else:
         result = combine(args.filetype)
 
-
     print("Results exported.")
 
 
 if __name__ == "__main__":
-    Main()
+    main()
