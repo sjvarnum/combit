@@ -1,11 +1,10 @@
 import pandas as pd
-from pandas import DataFrame
 import os
 import glob
 import argparse
 
 
-def combine(file_type, data_path=os.getcwd()):
+def combine(file_type, data_path):
 
     if file_type == 'excel':
         print("Processing Excel Files.")
@@ -27,9 +26,7 @@ def combine(file_type, data_path=os.getcwd()):
             data_df = pd.concat(data, ignore_index=True)
             combined_list.append(data_df)
         concat_data = pd.concat(combined_list, ignore_index=True)
-        concat_data.to_csv(os.path.join(data_path, "combined.csv"),
-                                        index=False)
-
+        concat_data.to_csv(os.path.join(data_path, "combined.csv"), index=False)
 
 
 def main():
@@ -38,16 +35,14 @@ def main():
                                      description="""Description: Combine CSV or
                                      Excel  files.""",
                          formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("filetype", help="CSV or Excel.")
+    parser.add_argument("-f", "--filetype", help="CSV or Excel.",
+                        default="csv")
     parser.add_argument("-d", "--directory", help="Path to the files.",
                         default=os.getcwd())
 
     args = parser.parse_args()
 
-    if args.directory:
-        result = combine(args.filetype, args.directory)
-    else:
-        result = combine(args.filetype)
+    result = combine(args.filetype, args.directory)
 
     print("Results exported.")
 
